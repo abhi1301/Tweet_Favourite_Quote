@@ -21,8 +21,12 @@ NMBR_OF_CHAR_PER_LINE  = 40
 # Credentials required for accessing the TwitterAPI...........
 CONSUMER_KEY = 'M3ExtQJiDqipGXaRDRiPdn0fi'
 CONSUMER_SECRET = 'pFhb4QoRjd7mWTALBnoSt0uWJeD9zMz6YQeFpBCvk4JoYu7r3d'
-ACCESS_TOKEN_KEY = '4086270673-Ldr8KMe8HD9DOlEFJ6LjFgBLGqBSnsyUF2nDz8b'
-ACCESS_TOKEN_SECRET = 'HeG3lyNQ6qptXgr2bP8Cekxkanl7A8HiUopKC4aOsvFKx'
+ACCESS_TOKEN_KEY = '877229053526376452-9G5ky0mQnNOyjpFbM3cVyw1MbsRjITS'
+ACCESS_TOKEN_SECRET = 'AD1yyvx1mDMESbdvyXtYxoiHzL1sd7nlgspfdSJRTPn4V'
+
+# my credentials
+# ACCESS_TOKEN_KEY = '4086270673-Ldr8KMe8HD9DOlEFJ6LjFgBLGqBSnsyUF2nDz8b'
+# ACCESS_TOKEN_SECRET = 'HeG3lyNQ6qptXgr2bP8Cekxkanl7A8HiUopKC4aOsvFKx'
 # -----------%%%%%%%% TwitterAPI Credentials ends %%%%%%%%%%%-------------------
 
 
