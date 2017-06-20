@@ -5,7 +5,8 @@ Posting my favourites quotes on my twitter page as images.
 from TwitterAPI import TwitterAPI
 from PIL import Image, ImageDraw, ImageFont
 import textwrap
-
+import requests
+import json
 
 TWEET_TEXT = 'Quote of the day:'
 # IMAGE_PATH = 'upload.jpg'
@@ -22,8 +23,14 @@ api = TwitterAPI(CONSUMER_KEY,
                  ACCESS_TOKEN_KEY,
                  ACCESS_TOKEN_SECRET)
 
+# These code snippets use an open-source library.
+response = requests.get("https://talaikis.com/api/quotes/random")
+RandQuote = json.loads(response.text)
+print(RandQuote['quote'])
+print(RandQuote['author'])
 
-Quote = 'Becoming a dad means you have to be a role model for your son and be someone he can look up to.'
+
+Quote = RandQuote['quote']
 para = textwrap.wrap(Quote, width=50)
 lines = 0
 for line in para:
@@ -65,18 +72,18 @@ im.save('test.png')
 # ?_________________________________________________________________________________________________________-
 
 
-# # STEP 1 - upload image
-# file = open(IMAGE_PATH, 'rb')
-# data = file.read()
-#
-# r = api.request('media/upload', None, {'media': data})
-# print(r.status_code)
-#
-# print('UPLOAD MEDIA SUCCESS' if r.status_code == 200 else 'UPLOAD MEDIA FAILURE')
-#
-# # STEP 2 - post tweet with a reference to uploaded image
-# if r.status_code == 200:
-#     media_id = r.json()['media_id']
-#     r = api.request(
-#         'statuses/update', {'status': TWEET_TEXT, 'media_ids': media_id})
-#     print('UPDATE STATUS SUCCESS' if r.status_code == 200 else 'UPDATE STATUS FAILURE')
+# STEP 1 - upload image
+file = open('test.png', 'rb')
+data = file.read()
+
+r = api.request('media/upload', None, {'media': data})
+print(r.status_code)
+
+print('UPLOAD MEDIA SUCCESS' if r.status_code == 200 else 'UPLOAD MEDIA FAILURE')
+
+# STEP 2 - post tweet with a reference to uploaded image
+if r.status_code == 200:
+    media_id = r.json()['media_id']
+    r = api.request(
+        'statuses/update', {'status': TWEET_TEXT, 'media_ids': media_id})
+    print('UPDATE STATUS SUCCESS' if r.status_code == 200 else 'UPDATE STATUS FAILURE')
