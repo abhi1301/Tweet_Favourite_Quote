@@ -8,7 +8,13 @@ import textwrap
 import requests
 import json
 
-TWEET_TEXT = 'Quote of the day:'
+
+FONT_NAME = 'Fonts/arial.ttf'
+FONT_COLOR = 'red'
+BACKGROUND_COLOR = 'white'
+FONT_SIZE = 38
+NMBR_OF_CHAR_PER_LINE  = 40
+
 # IMAGE_PATH = 'upload.jpg'
 
 # Credentials -------------------
@@ -26,34 +32,35 @@ api = TwitterAPI(CONSUMER_KEY,
 # These code snippets use an open-source library.
 response = requests.get("https://talaikis.com/api/quotes/random")
 RandQuote = json.loads(response.text)
-print(RandQuote['quote'])
-print(RandQuote['author'])
-
-
+print('Quote tweeted : '+RandQuote['quote'])
+print('Author : '+RandQuote['author'])
+TWEET_TEXT = 'Quote of the day:\nBy- '+RandQuote['author']
+# print(TWEET_TEXT)
 Quote = RandQuote['quote']
-para = textwrap.wrap(Quote, width=50)
+para = textwrap.wrap(Quote, width= NMBR_OF_CHAR_PER_LINE)
 lines = 0
 for line in para:
     lines+=1
 
 # print(para[1])
 MAX_W, MAX_H = 400, 300
-im = Image.new('RGB', (MAX_W, MAX_H), (0, 0, 0, 0))
-draw = ImageDraw.Draw(im)
+image = Image.new('RGB', (MAX_W, MAX_H), BACKGROUND_COLOR)
+draw = ImageDraw.Draw(image)
+font = ImageFont.truetype(FONT_NAME, FONT_SIZE)
 current_h, pad = 30, 10
-w, h = draw.textsize(para[0])
-MAX_H = (h+pad)*lines + 80
-im = Image.new('RGB', (MAX_W, MAX_H), (0, 0, 0, 0))
-draw = ImageDraw.Draw(im)
-# font = ImageFont.truetype('Arial.ttf', 18)
+w, h = draw.textsize(para[0],font=font)
+MAX_H = (h+pad)*lines + 100
+MAX_W = int(FONT_SIZE/2)* NMBR_OF_CHAR_PER_LINE + 50
+image = Image.new('RGB', (MAX_W, MAX_H), BACKGROUND_COLOR)
+draw = ImageDraw.Draw(image)
+
 
 for line in para:
-    w, h = draw.textsize(line)#, font=font)
-    print(w,'   ',h)
-    draw.text(((MAX_W - w) / 2, current_h), line)#, font=font)
+    w, h = draw.textsize(line, font=font)
+    draw.text(((MAX_W - w) / 2, current_h), line, font=font, fill = FONT_COLOR)
     current_h += h + pad
 
-im.save('test.png')
+image.save('test.png')
 
 # --------------------------------------------------------------------
 # with Drawing() as draw:
